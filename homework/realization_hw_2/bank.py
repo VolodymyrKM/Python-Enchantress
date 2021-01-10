@@ -54,7 +54,7 @@ class BankAccount:
         print(f'\n-----------TRANSACTION MESSAGE -----------\n'
               f'Dear {self._person_name}! At {BankAccount.TIME_BANK_ACTION} you transferred {money}.\n'
               f'Now your balance: {self._balance}\n'
-              f'-----------TRANSACTION MESSAGE -----------\n')
+              f'-----------TRANSACTION MESSAGE ------------\n')
 
     # decorating method transfer_money to setter
     transfer_money = property(fset=transfer_money)
