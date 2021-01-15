@@ -1,20 +1,23 @@
-def add(x, y):
+from typing import Union
+
+
+def add(addend_x: Union[int, float], addend_y: Union[int, float]):
     """Add Function"""
-    return x + y
+    return addend_x + addend_y
 
 
-def subtract(x, y):
+def subtract(minuend: Union[int, float], subtrahend: Union[int, float]):
     """Subtract Function"""
-    return x - y
+    return minuend - subtrahend
 
 
-def multiply(x, y):
+def multiply(factor_x: Union[int, float], factor_y: Union[int, float]):
     """Multiply Function"""
-    return x * y
+    return factor_x * factor_y
 
 
-def divide(x, y):
+def divide(dividend: Union[int, float], divisor: Union[int, float]):
     """Divide Function"""
-    if y == 0:
+    if divisor == 0:
         raise ValueError('Can not divide by zero!')
-    return x / y
+    return dividend / divisor
