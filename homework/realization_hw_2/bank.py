@@ -4,6 +4,13 @@ from datetime import datetime
 
 
 class BankAccount:
+    """
+     initialization of the instance BankAccount with the attributes
+     personal_data takes as the parameter the instance of the class person:
+     after almost each parameter unpuked from human instance.
+     this class provides simple access to the data of the person as a password check,
+     and also this class provides two maine human life possibility of earning money ad spending money
+    """
     TIME_BANK_ACTION = datetime.now().strftime("%b %d %Y %H:%M:%S")
 
     # creation bank account some person

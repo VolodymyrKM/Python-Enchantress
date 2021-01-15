@@ -8,6 +8,12 @@ from realtor import SingletonDecorator
 
 
 class Human(person.Person):
+    """
+    Initialization of the instance human inherited from the abstract class Person,
+    and implement it method.
+    the human has two method make money which is provides earn and transfer money
+    to the personal balance and method by house
+    """
     def __init__(self, name, age, bankaccount, personal_home=None):
         super().__init__(name, age, bankaccount, personal_home)
 
@@ -29,16 +35,25 @@ class Human(person.Person):
         else:
             print(f'\nI should work harder to earn more\n'
                   f'money to by this house for {house.cost}...\n')
+            return house
 
 
 @SingletonDecorator
 class HouseAuction:
+    """
+    Initialisation of class HouseAuction with the attributes person which randomly create persons
+    and add person attribute account.
+    Also this class provide one maine method start_auction.
+    """
+
+
+
     PERSONAL_DATA = Faker()
 
     def __init__(self):
 
         self.person = [Human(self.PERSONAL_DATA.name(), random.randint(27, 67), None) for _ in
-                       range(random.randint(2, 2))]
+                       range(random.randint(2, 4))]
         for human in self.person:
             human.account = bank.BankAccount(human, balance=random.randint(50_000, 100_000))
         self.realtor = realtor.Realtor()
@@ -61,6 +76,7 @@ class HouseAuction:
                     self.realtor.discaunt(house)
                 if not random.choice((list(range(0, 100, 3)) + list(range(0, 10, 2)))) % 2:
                     self.realtor.thief_posibility(person)
+                    continue
                 person.account.transfer_money = house.cost
                 self.realtor.account.earn_money = house.cost
                 person.personal_home = house

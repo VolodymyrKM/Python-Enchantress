@@ -4,6 +4,13 @@ from bank import BankAccount
 
 
 class Person(ABC):
+    """
+    Initialization of abstract  class which provides simple personal attributes
+    and attributes account which takes parameters as class BankAccount
+    also not method make money -> person should do some work
+    and method by house
+
+    """
     def __init__(self, name: str, age: int, bankaccount: BankAccount, personal_home=None):
         self.name = name
         self.age = age

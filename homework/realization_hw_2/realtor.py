@@ -11,6 +11,9 @@ House.__new__.__defaults__ = (None, None, None, False)
 
 
 class SingletonDecorator(object):
+    '''
+    Singleton decorator provides only one instance of some class
+        '''
     def __init__(self, klass):
         self.klass = klass
         self.instance = None
@@ -23,6 +26,16 @@ class SingletonDecorator(object):
 
 @SingletonDecorator
 class Realtor:
+    '''
+    initialization of simple person attributes as the name and age, also takes as the parameter
+    class BankAccount, and implement the number of class (namedtuple) -> House.
+    Also this class provides three methods:
+    discount -> this methods take care during auction, and check the attribute of class House if the discount
+    True or False
+    thief-possibility -> this method provides also during auction and work randomly with chance of 10 %.
+    if chance is the realtor transfer all money from account costumer to his account.
+    Class realtor can make his presentation according the data which take in from his attribute house.
+    '''
     PERSONAL_DATA = Faker()
 
     def __init__(self, name=PERSONAL_DATA.name(), age=30):
@@ -34,7 +47,7 @@ class Realtor:
                   random.randint(100, 500),
                   random.randint(15_000, 100_000),
                   random.choice([True, False]))
-            for _ in range(random.randint(6, 10))
+            for _ in range(random.randint(10, 15))
         ]
         self.account = BankAccount(self, balance=40_000)
 
