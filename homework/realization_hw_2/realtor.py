@@ -84,3 +84,4 @@ class Realtor:
         costumer.account.balance = 0
         print('Money was stole.\n'
               '--THIEF--THIEF--THIEF--THIEF--THIEF--THIEF\n')
+        
