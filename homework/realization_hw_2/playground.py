@@ -10,9 +10,9 @@ from realtor import SingletonDecorator
 class Human(person.Person):
     """
     Initialization of the instance human inherited from the abstract class Person,
-    and implement it method.
-    the human has two method make money which is provides earn and transfer money
-    to the personal balance and method by house
+    and implement its methods.
+    the human has two methods make money which is supply to earn and transfer money
+    to the personal balance and method buy house
     """
     def __init__(self, name, age, bankaccount, personal_home=None):
         super().__init__(name, age, bankaccount, personal_home)
