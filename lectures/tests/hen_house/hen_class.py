@@ -11,11 +11,12 @@ class HenHouse:
     hens_productivity = {'winter': 0.25, 'spring': 0.75, 'autumn': 0.5, 'summer': 1}
 
     def __init__(self, hen_count: int):
-        self.hen_count = hen_count
-        if self.hen_count < self.min_hens_accepted:
-            raise ValueError('You need more hens))')
-        else:
+        if hen_count > self.min_hens_accepted:
+            self.hen_count = hen_count
             print("You have enough hens!!!")
+        else:
+            raise ValueError('You need more hens))')
+
 
     @property
     def season(self) -> str:
@@ -60,5 +61,4 @@ class HenHouse:
             return int(page.text[10])
         else:
             raise ConnectionError()
-
 
