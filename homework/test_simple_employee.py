@@ -28,7 +28,3 @@ class Employee:
             return response.text
         else:
             return 'Bad Response!'
-#
-#
-# emp = Employee('Nick', 'Jordan', 35000)
-# print(emp.monthly_schedule('June'))

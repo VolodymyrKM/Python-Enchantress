@@ -37,5 +37,6 @@ class TestEmployee(TestCase):
             print(request)
             self.assertEqual(request, 'Bad Response!')
 
-if __name__=='__main__':
+
+if __name__ == '__main__':
     unittest.main()

@@ -116,3 +116,10 @@ class TestDivideFunction(TestCase):
         inputs = Decimal('3.4'), Decimal('5.8')
         expect = Decimal('9.2')
         self.assertEqual(add(*inputs), expect)
+
+    def test_add_other_type_of_data(self):
+        input_data = 'Hello', 32
+        expect = TypeError
+        self.assertRaises(expect, lambda: add(*input_data))
+        with self.assertRaises(TypeError):
+            add('Hello', 32)
