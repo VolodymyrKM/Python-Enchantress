@@ -2,7 +2,7 @@ from datetime import datetime
 from databaseconnection import DatabaseConnection
 from setup import set_table
 
-from users_dict import users_dict, update_user_dict, bad_user_dict
+from users_dict import users_dict, update_user_dict
 
 
 class DataBaseParser:
@@ -21,29 +21,23 @@ class DataBaseParser:
             cursor.execute(set_table)
 
     @staticmethod
-    def create_user(user_info) -> None:
+    def create_user(user_info):
         """Creation user in db 'users' with values 'name', 'email', 'registration time' """
         with DatabaseConnection() as cursor:
-            cursor.execute(
-                """INSERT INTO users (name, email, registration_time)
-                 VALUES (%(name)s, %(email)s, %(registration_time)s)""",
-                user_info, )
+            cursor.execute("""INSERT INTO users (name, email, registration_time)
+                 VALUES (%(name)s, %(email)s, %(registration_time)s)""", user_info)
 
     @staticmethod
-    def read_user_info(user_id) -> str or None:
+    def read_user_info(user_id):
         """read user info by user id """
         with DatabaseConnection() as cursor:
             cursor.execute("""SELECT name, email, registration_time
              FROM users WHERE id = %s""", (user_id,))
             data_info = cursor.fetchone()
-            if data_info:
-                return f'user name: {data_info[0]},' \
-                       f' user email: {data_info[1]},' \
-                       f' data registration: {data_info[2]}'
-            return data_info
+        return data_info
 
     @staticmethod
-    def update_user(user_id=None, *, user_info: dict) -> None:
+    def update_user(user_id=None, *, user_info: dict):
         """update db users : 'name', 'email', uses id"""
         if user_id:
             user_info['user_id'] = user_id  # This parameter used to set user_id in dict info_user for updating
@@ -52,15 +46,15 @@ class DataBaseParser:
                 SET name = %(name)s,
                 email = %(email)s,
                 registration_time = %(registration_time)s
-                WHERE id = %(user_id)s""", user_info, )
+                WHERE id = %(user_id)s""", user_info)
 
     @staticmethod
-    def delete_user(_id: int) -> None:
+    def delete_user(_id: int):
         with DatabaseConnection() as cursor:
             cursor.execute("""DELETE FROM users WHERE id = %s""", (_id,))
 
     @staticmethod
-    def create_cart(user_info: dict) -> None:
+    def create_cart(user_info: dict):
         """Creation cart for user and card details whit setting products and price for each product"""
         with DatabaseConnection() as cursor:
             cursor.execute('INSERT INTO cart (creation_time, user_id) VALUES (%s, %s)',
@@ -70,12 +64,11 @@ class DataBaseParser:
             cart_details = user_info.get('cart_details')  # list with dicts witch will be set as cart details
             for cart_detail in cart_details:
                 cart_detail['cart_id'] = id_cart  # setting each card id in dict and set into cart details
-                cursor.execute(
-                    """INSERT INTO cart_details (cart_id, price, product)
-                     VALUES (%(cart_id)s, %(price)s, %(product)s)""", cart_detail, )
+                cursor.execute("""INSERT INTO cart_details (cart_id, price, product)
+                     VALUES (%(cart_id)s, %(price)s, %(product)s)""", cart_detail)
 
     @staticmethod
-    def update_cart(update_user_dict) -> None:
+    def update_cart(update_user_dict):
         with DatabaseConnection() as cursor:
             users_update_cards = update_user_dict.get('cart_details')  # take list with dict from update_dict
             cursor.execute("""SELECT id from cart_details
@@ -85,38 +78,35 @@ class DataBaseParser:
                 update_card['id'] = card_id
                 cursor.execute("""UPDATE cart_details
                      SET price = %(price)s, product = %(product)s
-                      WHERE id = %(id)s""", update_card, )
+                      WHERE id = %(id)s""", update_card)
 
     @staticmethod
-    def read_cart(cart_id: int) -> str or None:
+    def read_cart(cart_id: int):
         """Output to the user info from all the card details"""
         with DatabaseConnection() as cursor:
             cursor.execute("""SELECT cart_id, price, product
                               FROM cart_details
                               WHERE cart_id = %s""", (cart_id,))
             read_data = cursor.fetchone()  # select on product from product list
-            if read_data:
-                return f'cart id: {read_data[0]},' \
-                       f' price: {read_data[1]},' \
-                       f' product: {read_data[2]}'
-        return read_data
+            return read_data
 
     @staticmethod
-    def delete_cart(id_cart: int) -> None:
+    def delete_cart(id_cart: int):
         with DatabaseConnection() as cursor:
-            cursor.execute('DELETE FROM cart_details WHERE cart_id = %s', (id_cart,))
             cursor.execute('DELETE FROM cart WHERE id = %s', (id_cart,))
 
 
 if __name__ == '__main__':
     dbp = DataBaseParser()
     dbp._setup()
-    dbp.create_user(bad_user_dict)
+    dbp.create_user(users_dict)
     print(dbp.read_user_info(1))
     dbp.update_user(5, user_info=update_user_dict)
-    dbp.delete_user(5)
+    dbp.delete_user(1)
+    dbp.update_user(1, user_info=update_user_dict)
     dbp.create_cart(users_dict)
-    dbp.update_cart(update_user_dict)
-    dbp.read_cart(2)
-    dbp.delete_cart(7)
+    print(dbp.update_cart(update_user_dict))
+    print(dbp.read_cart(1))
+    dbp.delete_cart(1)
+    print(dbp.read_cart(1))
     dbp._cleaned_up()
