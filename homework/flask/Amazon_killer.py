@@ -25,8 +25,10 @@ class CartNotFound(Exception):
 def create_add_user():
     global user_counter
     user = request.json
+    
     user['user_id'] = user_counter
     dt = datetime.now().isoformat()
+    
     response = {
         'registration_timestamp': dt,
         'user_id': user_counter
@@ -44,11 +46,13 @@ def create_add_user():
 def update_user(user_id):
     if user_id not in USER_DATABASE:
         raise UserNotFound(user_id)
+    
     update_data_user = request.json
     for key, value in USER_DATABASE.items():
         if key == user_id:
             value["name"] = update_data_user["name"]
             value["email"] = update_data_user["email"]
+            
         response = {
             "status": "success"
         }
@@ -65,6 +69,7 @@ def get_user(user_id):
     user = USER_DATABASE.get(user_id)
     if user is not None:
         return user
+    
     raise UserNotFound(user_id)
 
 
@@ -72,8 +77,10 @@ def get_user(user_id):
 def delete_user(user_id):
     if user_id not in USER_DATABASE:
         raise UserNotFound(user_id)
+    
     USER_DATABASE.pop(user_id)
     response = {"status": "success"}
+    
     return response
 
 
@@ -83,13 +90,16 @@ def add_user_cart():
     USER_DATABASE[1] = dict()
     cart = request.json
     user_id = cart.get("user_id")
+    
     if user_id not in USER_DATABASE:
         raise UserNotFound(user_id)
+    
     dt = datetime.now().isoformat()
     response = {"cart_id": cart_counter,
                 "creation_time": dt}
     cart["creation_time"] = response["creation_time"]
     CART_DATABASE[cart_counter] = cart
+    
     cart_counter += 1
     status_code = 201
 
@@ -104,6 +114,7 @@ def cart_not_found(error):
 @amazon_killer.route('/read_cart/<int:cart_id>', methods=['GET'])
 def read_cart_user(cart_id):
     cart = CART_DATABASE.get(cart_id)
+    
     if cart is None:
         raise CartNotFound(cart_id)
     return cart

@@ -45,10 +45,9 @@ def test_create_user(store_app, create_user, response_from_create,
 @pytest.mark.parametrize('value', range(2, 10))
 def test_user_not_found(store_app, value):
     response = store_app.get(f'/users/{value}')
+    
     assert response.status_code == 404
-    assert response.json == {
-        "error": f"no such user with id {value}"
-    }
+    assert response.json == {"error": f"no such user with id {value}"}
 
 
 def test_put_user(store_app):
@@ -66,12 +65,14 @@ def test_put_user(store_app):
 @pytest.mark.parametrize('value', range(2, 100))
 def test_put_invalid_user(store_app, value):
     response = store_app.put(f'/users/{value}')
+    
     assert response.status_code == 404
     assert response.json == {"error": f"no such user with id {value}"}
 
 
 def test_delete_user(store_app):
     response = store_app.delete('/users/1')
+    
     assert response.json == {"status": "success"}
     assert response.status_code == 200
 
@@ -79,6 +80,7 @@ def test_delete_user(store_app):
 @pytest.mark.parametrize('value', range(2, 100))
 def test_delete_user_invalid_input(store_app, value):
     response = store_app.delete(f'/users/{value}')
+    
     assert response.status_code == 404
     assert response.json == {"error": f"no such user with id {value}"}
 
@@ -134,6 +136,7 @@ def test_update_cart_user(store_app):
                                        }
                                    ]
                                    })
+    
     assert response.status_code == 200
     assert response.json == {"status": "success"}
 
