@@ -1,6 +1,6 @@
 import pytest
 from freezegun import freeze_time
-from amazon_killer import amazon_killer as app
+from Amazon_killer import amazon_killer as app
 from users_info import t_create_user, t_response_create_user, t_full_response_from_create_user
 
 

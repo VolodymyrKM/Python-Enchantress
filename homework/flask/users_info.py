@@ -18,4 +18,3 @@ t_full_response_from_create_user = {
         "registration_timestamp": '2021-02-08T14:16:41',
     }
 
-print(len(None))
